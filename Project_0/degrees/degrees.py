@@ -92,8 +92,77 @@ def shortest_path(source, target):
     If no possible path, returns None.
     """
 
-    # TODO
-    raise NotImplementedError
+    # Initializing a frontier
+    frontier = QueueFrontier()
+    # Explored nodes
+    explored = set()
+    # Nodes with connection to parent/source nodes
+    nodes = set()
+
+
+    # Start node
+    start = Node(source, None, people[source]['movies'])
+    #Checking that start and goal are not the same person
+    if source == target:
+        return None
+    
+    # Frontier stores start node 
+    frontier.add(start)
+    NodeIsExplored = False
+
+    # Using frontier to explore other nodes
+    while not frontier.empty():
+        # the node being explored is parent to next node: Firstly start node is parent leading to other nodes
+        parentNode = frontier.remove()
+        explored.add(parentNode)
+
+        # get movies (i.e. action ) that the node has been in
+        actions = parentNode.action
+
+        # go through actions to find if there is any other actor that has been in the movie
+        for movieID in actions:
+             connectedStars = movies[movieID]['stars']
+
+             for star in connectedStars:
+                NodeIsExplored = False
+                childNode = Node(star,parentNode,people[star]['movies'])
+
+                # is child node the goal? 
+                if childNode.state == target:
+                    
+                    # We will have to trace back the path and reverse it to find the original path traced to reach this state
+                    
+                    # Initialize a empty list
+                    path = []
+
+                    while childNode.parent != None:
+                        movie = set(childNode.parent.action) & set(childNode.action) 
+                        movieStar = movie.pop()
+                        path = path + [(movieStar,childNode.state)]
+
+                        # Move to next parent node up the shortest path
+                        childNode = childNode.parent
+                    # path from target to source obtained. Reverse to get path from source to target
+                    path.reverse()
+                    return path
+                
+                # To check if we have been in a node before or not
+                # If the node is already explored we won't again add it to frontier to explore it further
+                for exploredNode in explored:
+                    if childNode.state == exploredNode.state():
+                        NodeIsExplored = True
+                
+                # if node is not explored before, we will explore it further so we will push it in frontier
+                if not NodeIsExplored:
+                    frontier.add(childNode)
+
+                childNode = None
+
+                ## End of actions to connect from parent to child nodes
+
+
+
+
 
 
 def person_id_for_name(name):
