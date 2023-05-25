@@ -7,7 +7,7 @@ In this repository, I will be uploading the projects related to the course on va
 ## 0. Project 0
 
 
-#### 0.1 Degree
+#### **0.1 Degree**
 
 **Understanding**
 
@@ -50,7 +50,8 @@ You’re welcome to borrow and adapt any code from the lecture examples. We’ve
 
 
 
-#### 0.2 Tic-Tac-Toe
+
+#### **0.2 Tic-Tac-Toe**
 
 **Understanding**
 
