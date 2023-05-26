@@ -93,6 +93,10 @@ def shortest_path(source, target):
     """
 
     # Initializing a frontier
+
+    # For DFS
+    # frontier = StackFrontier()
+    # For BFS 
     frontier = QueueFrontier()
     # Explored nodes
     explored = set()
